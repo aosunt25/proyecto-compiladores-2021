@@ -19,7 +19,7 @@ feature
 
 formal: ID ':' TYPE;
 
-expression: expression '(' '@' TYPE ')' '.' ID '(' (expression (',' expression)*) ')'								
+expression: expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'    								
 			| IF expression THEN expression ELSE expression FI										
 			| WHILE expression LOOP expression POOL													
 			| '{' (expression ';')+ '}'																		
