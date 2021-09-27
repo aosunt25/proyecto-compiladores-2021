@@ -3,7 +3,7 @@ grammar Cool;
 program: ( klass ';')*;
 
 // Esta regla está mal, solo es para poder generar un parser y probar
-klass:(klass ';')+;
+klass: CLASS TYPE (INHERITS TYPE)? '{' (feature ';')* '}';
 
 // Ignorar:
 COMMENT: '/*' .*? '*/' -> skip;
@@ -20,25 +20,25 @@ feature
 formal: ID ':' TYPE;
 
 expression: expression '(' '@' TYPE ')' '.' ID '(' (expression (',' expression)*) ')'								
-	| IF expression THEN expression ELSE expression FI										
-	| WHILE expression LOOP expression POOL													
-	| '{' (expression ';')+ '}'																		
-	| LET ID ':' TYPE '(' '<-' expression ')' '(' ',' ID ':' TYPE '(' '<-' expression ')' ')'* IN expression	
-	| CASE expression OF (ID ':' TYPE op('=>') expression ';') + ESAC								
-	| NEW TYPE																				
-	| (expression ';')																			
-	| '~'expression																					
-	| ISVOID expression																		
-	| expression op=('*') expression																			
-	| expression op=('-') expression																				
-	| expression op=('+') expression																			
-	| expression op=('/') expression																				
-	| expression op=('<') expression																			
-	| expression op=('<=') expression																			
-	| expression op=('=') expression																			
-	| NOT expression																				
-	| ID '<-' expression
-	;																		
+			| IF expression THEN expression ELSE expression FI										
+			| WHILE expression LOOP expression POOL													
+			| '{' (expression ';')+ '}'																		
+			| LET ID ':' TYPE '(' '<-' expression ')' '(' ',' ID ':' TYPE '(' '<-' expression ')' ')'* IN expression	
+			| CASE expression OF (ID ':' TYPE '=>' expression ';') + ESAC								
+			| NEW TYPE																				
+			| (expression ';')																			
+			| '~'expression																					
+			| ISVOID expression																		
+			| expression '*' expression																			
+			| expression '-' expression																				
+			| expression '+' expression																			
+			| expression '/' expression																				
+			| expression '<' expression																			
+			| expression '<=' expression																			
+			| expression '=' expression																			
+			| NOT expression																				
+			| ID '<-' expression
+			;																		
 
 /*
 * Aquí comenzaría el léxico
