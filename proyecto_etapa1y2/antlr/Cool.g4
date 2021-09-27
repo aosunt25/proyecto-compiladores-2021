@@ -3,7 +3,7 @@ grammar Cool;
 program: ( klass ';')*;
 
 // Esta regla está mal, solo es para poder generar un parser y probar
-klass: CLASS TYPE (INHERITS TYPE)? '{' (feature ';')* '}';
+klass: KLASS TYPE (INHERITS TYPE)? '{' (feature ';')* '}';
 
 // Ignorar:
 COMMENT: '/*' .*? '*/' -> skip;
@@ -13,31 +13,30 @@ LINE_COMMENT: '//' ~[\r\n]* -> skip;
 WS: [ \t\r\n]+ -> skip;
 
 feature
-	: ID '(' (formal (',' formal)*)? ')' ':' TYPE '{' expression '}'
-	| ID ':' TYPE'(''<-' expression ')' 
+	: ID '(' (formal (',' formal)*)? ')' ':' TYPE '{' expression '}'# method
+	| ID ':' TYPE'(''<-' expression ')'  #attribute
 	;
 
 formal: ID ':' TYPE;
 
-expression: expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'    								
-			| IF expression THEN expression ELSE expression FI										
-			| WHILE expression LOOP expression POOL													
-			| '{' (expression ';')+ '}'																		
-			| LET ID ':' TYPE '(' '<-' expression ')' '(' ',' ID ':' TYPE '(' '<-' expression ')' ')'* IN expression	
-			| CASE expression OF (ID ':' TYPE '=>' expression ';') + ESAC								
-			| NEW TYPE																				
-			| (expression ';')																			
-			| '~'expression																					
-			| ISVOID expression																		
-			| expression '*' expression																			
-			| expression '-' expression																				
-			| expression '+' expression																			
-			| expression '/' expression																				
-			| expression '<' expression																			
-			| expression '<=' expression																			
-			| expression '=' expression																			
-			| NOT expression																				
-			| ID '<-' expression
+expression: expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'  #simplecall    								
+			| IF expression THEN expression ELSE expression FI	#if									
+			| WHILE expression LOOP expression POOL #while													
+			| '{' (expression ';')+ '}'	 #block																	
+			| LET ID ':' TYPE '(' '<-' expression ')' '(' ',' ID ':' TYPE '(' '<-' expression ')' ')'* IN expression #let
+			| CASE expression OF (ID ':' TYPE '=>' expression ';') + ESAC #case								
+			| NEW TYPE	#new																																					
+			| '~'expression	# negative																				
+			| ISVOID expression	# isvoid																	
+			| expression '*' expression # multiply																			
+			| expression '-' expression # minus																		
+			| expression '+' expression	# add																		
+			| expression '/' expression	# division																			
+			| expression '<' expression	# lessThan																		
+			| expression '<=' expression # lessEqual																			
+			| expression '=' expression	# equal																		
+			| NOT expression # boolNot																				
+			| ID '<-' expression # assignment
 			;																		
 
 /*
@@ -81,3 +80,6 @@ OF: O F;
 NOT: N O T;
 TRUE: T R U E;
 FALSE: F A L S E;
+
+TYPE: [A-Z] [_0-9A-Za-z]*;
+ID: [a-z] [_0-9A-Za-z]*;
