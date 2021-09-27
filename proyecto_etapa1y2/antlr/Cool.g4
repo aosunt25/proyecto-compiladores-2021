@@ -5,6 +5,13 @@ program: ( klass ';')*;
 // Esta regla está mal, solo es para poder generar un parser y probar
 klass: KLASS;
 
+// Ignorar:
+COMMENT: '/*' .*? '*/' -> skip;
+
+LINE_COMMENT: '//' ~[\r\n]* -> skip;
+
+WS: [ \t\r\n]+ -> skip;
+
 feature:
 	ID '(' (formal (',' formal)*)? ')' ':' TYPE '{' expression '}' # method
 	| ID: TYPE[ <- expr ] # attribute;
