@@ -53,21 +53,21 @@ class CoolListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CoolParser#objectcall.
-    def enterObjectcall(self, ctx:CoolParser.ObjectcallContext):
-        pass
-
-    # Exit a parse tree produced by CoolParser#objectcall.
-    def exitObjectcall(self, ctx:CoolParser.ObjectcallContext):
-        pass
-
-
     # Enter a parse tree produced by CoolParser#add.
     def enterAdd(self, ctx:CoolParser.AddContext):
         pass
 
     # Exit a parse tree produced by CoolParser#add.
     def exitAdd(self, ctx:CoolParser.AddContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#objectcall.
+    def enterObjectcall(self, ctx:CoolParser.ObjectcallContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#objectcall.
+    def exitObjectcall(self, ctx:CoolParser.ObjectcallContext):
         pass
 
 
@@ -233,6 +233,15 @@ class CoolListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CoolParser#base.
+    def enterBase(self, ctx:CoolParser.BaseContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#base.
+    def exitBase(self, ctx:CoolParser.BaseContext):
+        pass
+
+
     # Enter a parse tree produced by CoolParser#case_stat.
     def enterCase_stat(self, ctx:CoolParser.Case_statContext):
         pass
@@ -251,12 +260,57 @@ class CoolListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CoolParser#primary.
-    def enterPrimary(self, ctx:CoolParser.PrimaryContext):
+    # Enter a parse tree produced by CoolParser#parentheses.
+    def enterParentheses(self, ctx:CoolParser.ParenthesesContext):
         pass
 
-    # Exit a parse tree produced by CoolParser#primary.
-    def exitPrimary(self, ctx:CoolParser.PrimaryContext):
+    # Exit a parse tree produced by CoolParser#parentheses.
+    def exitParentheses(self, ctx:CoolParser.ParenthesesContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#id.
+    def enterId(self, ctx:CoolParser.IdContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#id.
+    def exitId(self, ctx:CoolParser.IdContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#int.
+    def enterInt(self, ctx:CoolParser.IntContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#int.
+    def exitInt(self, ctx:CoolParser.IntContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#string.
+    def enterString(self, ctx:CoolParser.StringContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#string.
+    def exitString(self, ctx:CoolParser.StringContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#true.
+    def enterTrue(self, ctx:CoolParser.TrueContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#true.
+    def exitTrue(self, ctx:CoolParser.TrueContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#false.
+    def enterFalse(self, ctx:CoolParser.FalseContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#false.
+    def exitFalse(self, ctx:CoolParser.FalseContext):
         pass
 
 

@@ -19,15 +19,17 @@ feature
 
 formal: ID ':' TYPE;
 
+
 expression: 
-			expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'  #simplecall    								
+			primary #base
+			|expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'  #at    								
 			| IF expression THEN expression ELSE expression FI	#if									
 			| WHILE expression LOOP expression POOL #while
-			| '('expression')' #objectcall	
-			| ID '(' (expression (',' expression)*)* ')'  #at												
+			| expression (TYPE)? '.' ID '(' (expression (',' expression)*)* ')' #objectcall	
+			| ID '(' (expression (',' expression)*)* ')'  #simplecall												
 			| '{' (expression ';')+ '}'	 #block																	
-			| LET ID ':' TYPE '(' '<-' expression ')' '(' ',' ID ':' TYPE '(' '<-' expression ')' ')'* IN expression #let
-			| CASE expression OF (ID ':' TYPE '=>' expression ';') + ESAC #case								
+			| LET ID ':' TYPE '(' '<-' expression ')' let_decl* IN expression #let
+			| CASE expression OF case_stat + ESAC #case								
 			| NEW TYPE	#new																																					
 			| '~'expression	# negative																				
 			| ISVOID expression	# isvoid																	
@@ -42,13 +44,17 @@ expression:
 			| ID '<-' expression # assignment
 			;	
 
-case_stat:
-    ;
+case_stat:(ID ':' TYPE '=>' expression ';');
 
-let_decl:
-    ;
+let_decl: '(' ',' ID ':' TYPE '(' '<-' expression ')' ')';
 
 primary:
+	'(' expression ')' # parentheses
+   | ID # id
+   | INT # int
+   | STRING # string
+   | TRUE # true
+   | FALSE # false
     ;
     																	
 
@@ -74,6 +80,11 @@ fragment U: [uU];
 fragment V: [vV];
 fragment W: [wW];
 
+//Fragments para declarar el string
+fragment HEX: [0-9a-fA-F];
+fragment UNICODE: 'u' HEX HEX HEX HEX;
+fragment ESC: '\\' (["\\/bfnrt] | UNICODE);
+
 KLASS: C L A S S;
 FI: F I;
 IF: I F;
@@ -96,3 +107,5 @@ FALSE: F A L S E;
 
 TYPE: [A-Z] [_0-9A-Za-z]*;
 ID: [a-z] [_0-9A-Za-z]*;
+INT: [0-9]+;
+STRING: '"' (ESC | ~ ["\\])* '"';
