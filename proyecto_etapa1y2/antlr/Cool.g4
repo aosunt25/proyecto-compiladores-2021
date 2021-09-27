@@ -19,9 +19,12 @@ feature
 
 formal: ID ':' TYPE;
 
-expression: expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'  #simplecall    								
+expression: 
+			expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')'  #simplecall    								
 			| IF expression THEN expression ELSE expression FI	#if									
-			| WHILE expression LOOP expression POOL #while													
+			| WHILE expression LOOP expression POOL #while
+			| '('expression')' #objectcall	
+			| ID '(' (expression (',' expression)*)* ')'  #at												
 			| '{' (expression ';')+ '}'	 #block																	
 			| LET ID ':' TYPE '(' '<-' expression ')' '(' ',' ID ':' TYPE '(' '<-' expression ')' ')'* IN expression #let
 			| CASE expression OF (ID ':' TYPE '=>' expression ';') + ESAC #case								
@@ -37,7 +40,17 @@ expression: expression ('@' TYPE)? '.' ID '(' (expression (',' expression)*)* ')
 			| expression '=' expression	# equal																		
 			| NOT expression # boolNot																				
 			| ID '<-' expression # assignment
-			;																		
+			;	
+
+case_stat:
+    ;
+
+let_decl:
+    ;
+
+primary:
+    ;
+    																	
 
 /*
 * Aquí comenzaría el léxico

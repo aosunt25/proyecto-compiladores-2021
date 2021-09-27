@@ -53,6 +53,15 @@ class CoolListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CoolParser#objectcall.
+    def enterObjectcall(self, ctx:CoolParser.ObjectcallContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#objectcall.
+    def exitObjectcall(self, ctx:CoolParser.ObjectcallContext):
+        pass
+
+
     # Enter a parse tree produced by CoolParser#add.
     def enterAdd(self, ctx:CoolParser.AddContext):
         pass
@@ -152,6 +161,15 @@ class CoolListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CoolParser#at.
+    def enterAt(self, ctx:CoolParser.AtContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#at.
+    def exitAt(self, ctx:CoolParser.AtContext):
+        pass
+
+
     # Enter a parse tree produced by CoolParser#lessThan.
     def enterLessThan(self, ctx:CoolParser.LessThanContext):
         pass
@@ -212,6 +230,33 @@ class CoolListener(ParseTreeListener):
 
     # Exit a parse tree produced by CoolParser#case.
     def exitCase(self, ctx:CoolParser.CaseContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#case_stat.
+    def enterCase_stat(self, ctx:CoolParser.Case_statContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#case_stat.
+    def exitCase_stat(self, ctx:CoolParser.Case_statContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#let_decl.
+    def enterLet_decl(self, ctx:CoolParser.Let_declContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#let_decl.
+    def exitLet_decl(self, ctx:CoolParser.Let_declContext):
+        pass
+
+
+    # Enter a parse tree produced by CoolParser#primary.
+    def enterPrimary(self, ctx:CoolParser.PrimaryContext):
+        pass
+
+    # Exit a parse tree produced by CoolParser#primary.
+    def exitPrimary(self, ctx:CoolParser.PrimaryContext):
         pass
 
 
