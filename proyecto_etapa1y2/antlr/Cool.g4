@@ -1,20 +1,13 @@
 grammar Cool;
 
-program: ( klass ';')*;
+program: (klass ';')*;
 
 // Esta regla está mal, solo es para poder generar un parser y probar
 klass: KLASS TYPE (INHERITS TYPE)? '{' (feature ';')* '}';
 
-// Ignorar:
-COMMENT: '/*' .*? '*/' -> skip;
-
-LINE_COMMENT: '//' ~[\r\n]* -> skip;
-
-WS: [ \t\r\n]+ -> skip;
-
 feature
 	: ID '(' (formal (',' formal)*)? ')' ':' TYPE '{' expression '}'# method
-	| ID ':' TYPE'(''<-' expression ')'  #attribute
+	| ID ':' TYPE ('<-' expression)?  #attribute
 	;
 
 formal: ID ':' TYPE;
@@ -28,8 +21,8 @@ expression:
 			| expression (TYPE)? '.' ID '(' (expression (',' expression)*)* ')' #objectcall	
 			| ID '(' (expression (',' expression)*)* ')'  #simplecall												
 			| '{' (expression ';')+ '}'	 #block																	
-			| LET ID ':' TYPE '(' '<-' expression ')' let_decl* IN expression #let
-			| CASE expression OF case_stat + ESAC #case								
+			| LET let_decl (',' let_decl)* IN expression #let
+			| CASE OF case_stat + ESAC #case								
 			| NEW TYPE	#new																																					
 			| '~'expression	# negative																				
 			| ISVOID expression	# isvoid																	
@@ -46,7 +39,7 @@ expression:
 
 case_stat:(ID ':' TYPE '=>' expression ';');
 
-let_decl: '(' ',' ID ':' TYPE '(' '<-' expression ')' ')';
+let_decl: ID ':' TYPE ( '<-' expression )? ;
 
 primary:
 	'(' expression ')' # parentheses
@@ -109,3 +102,10 @@ TYPE: [A-Z] [_0-9A-Za-z]*;
 ID: [a-z] [_0-9A-Za-z]*;
 INT: [0-9]+;
 STRING: '"' (ESC | ~ ["\\])* '"';
+
+// Ignorar:
+COMMENT: '/*' .*? '*/' -> skip;
+
+LINE_COMMENT: '//' ~[\r\n]* -> skip;
+
+WS: [ \t\r\n]+ -> skip;
