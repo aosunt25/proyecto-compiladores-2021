@@ -3,8 +3,11 @@ from antlr.CoolLexer import *
 from antlr.CoolParser import *
 from antlr.CoolListener import *
 
+from java.JavaLexer import *
+from java.JavaParser import *
 
 from antlr4 import *
+
 
 class Printer(CoolListener):
    def exitEveryRule(self, ctx: ParserRuleContext):
