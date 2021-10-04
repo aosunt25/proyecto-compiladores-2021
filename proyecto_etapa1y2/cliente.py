@@ -5,19 +5,24 @@ from antlr.CoolListener import *
 
 from java.JavaLexer import *
 from java.JavaParser import *
+from java.JavaParserListener import *
 
 from antlr4 import *
 
 
-class Printer(CoolListener):
-   def exitEveryRule(self, ctx: ParserRuleContext):
-       print("<{}>".format(ctx.getText()))
-
-       return super().exitEveryRule(ctx) 
+class Printer(JavaParserListener):
+   
+    def enterVariableDeclaratorId(self, ctx: JavaParser.VariableDeclaratorIdContext):
+        print(ctx.IDENTIFIER().getValue())
+    
+    def enterFormalParameter(self, ctx: JavaParser.FormalParameterContext):
+        ctx.getChild()
+        
+        return super().enterFormalParameter(ctx)
 
 def main():
-    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("test.cool"))))
-    tree = parser.program()
+    parser = JavaParser(CommonTokenStream(JavaLexer(FileStream("test.cool"))))
+    tree = parser.compilationUnit()
     printer = Printer()
 
     walker = ParseTreeWalker()
