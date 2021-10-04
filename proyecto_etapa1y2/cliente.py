@@ -13,15 +13,11 @@ from antlr4 import *
 class Printer(JavaParserListener):
    
     def enterVariableDeclaratorId(self, ctx: JavaParser.VariableDeclaratorIdContext):
-        print(ctx.IDENTIFIER().getValue())
+        print(ctx.IDENTIFIER())
     
-    def enterFormalParameter(self, ctx: JavaParser.FormalParameterContext):
-        ctx.getChild()
-        
-        return super().enterFormalParameter(ctx)
 
 def main():
-    parser = JavaParser(CommonTokenStream(JavaLexer(FileStream("test.cool"))))
+    parser = JavaParser(CommonTokenStream(JavaLexer(FileStream("test.java"))))
     tree = parser.compilationUnit()
     printer = Printer()
 
