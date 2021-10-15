@@ -4,6 +4,7 @@ program
     :   ( klass ';' ) *
     ;
 
+
 klass
     :   KLASS TYPE ( 'inherits' TYPE )? '{' ( feature ';' )* '}'
     ;

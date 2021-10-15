@@ -11,12 +11,17 @@ class Typecheck(CoolListener):
     def exitInteger(self, ctx: CoolParser.IntegerContext):
         ctx.type = "Int"
         self.typeTable[ctx] = "Int"
+    
+    def exitString(self, ctx: CoolParser.StringContext):
+        ctx.type = "String"
+        self.typeTable[ctx] = "String"
+    
+    def exitBool(self, ctx:CoolParser.BoolContext):
+        ctx.type = "Bool"
+        self.typeTable[ctx] = "Bool"
 
     def exitBase(self, ctx: CoolParser.BaseContext):
-        print (ctx.getChild(0).getText())
-
         ctx.type = ctx.getChild(0).type
-        
         self.typeTable[ctx] = self.typeTable[ctx.getChild(0)]
 
     def exitObject(self, ctx: CoolParser.ObjectContext):
@@ -24,15 +29,56 @@ class Typecheck(CoolListener):
         self.typeTable[ctx] = self.varTable[ctx.ID().getText()]
 
     def exitAdd(self, ctx: CoolParser.AddContext):
-        #if ctx.expr(0).type == "Int" and ctx.expr(1).type == "Int":
-        #    ctx.type = "Int"
-
-        left = ctx.expr(0)
-        right = ctx.expr(1)
         if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
             self.typeTable[ctx] = "Int"
         else:
             raise Exception("Type error")
+
+    def exitMult(self, ctx: CoolParser.MultContext):
+        if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
+            self.typeTable[ctx] = "Int"
+        else:
+            raise Exception("Type error")
+    
+    def exitDiv(self, ctx: CoolParser.DivContext):    
+        if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
+            self.typeTable[ctx] = "Int"
+        else:
+            raise Exception("Type error")
+    
+    def exitSub(self, ctx: CoolParser.SubContext):     
+        if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
+            self.typeTable[ctx] = "Int"
+        else:
+            raise Exception("Type error")
+
+    def exitLt(self, ctx: CoolParser.LtContext):
+        if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
+            self.typeTable[ctx] = "Int"
+        else:
+            raise Exception("Type error")
+    
+    def exitLe(self, ctx: CoolParser.LeContext):
+        if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
+            self.typeTable[ctx] = "Int"
+        else:
+            raise Exception("Type error")
+    
+    def exitEq(self, ctx: CoolParser.EqContext):
+        if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
+            self.typeTable[ctx] = "Int"
+        else:
+            raise Exception("Type error")
+    
+    def exitNot(self, ctx: CoolParser.NotContext):
+        if self.typeTable[ctx.expr()] == "Bool":
+            self.typeTable[ctx] = "Bool"
+        else:
+            raise Exception("Type error")
+    
+    def exitIf(self, ctx: CoolParser.IfContext):
+        print("hola")
+    
     
 
         
