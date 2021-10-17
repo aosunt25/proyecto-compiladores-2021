@@ -299,7 +299,7 @@ def setBaseClasses():
     k.addMethod('substr', Method('String', [('i', 'Int'), ('l', 'Int')]))
     _allClasses['String'] = k
     k = Klass('Bool')
-    _allClasses['String'] = k
+    _allClasses['Bool'] = k
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

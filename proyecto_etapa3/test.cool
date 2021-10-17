@@ -1,6 +1,6 @@
 class Main { 
     variable : Bool;
     main() : Bool {
-        not variable
+       {1;"s";1;}
     }; 
 };
