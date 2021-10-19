@@ -94,6 +94,8 @@ class Typecheck(CoolListener):
 
     
     def exitWhile(self, ctx: CoolParser.WhileContext):
+        self.typeTable[ctx] = "Object"
+
         if self.typeTable[ctx.expr(0)] == "Bool":
             if structure._allClasses[self.typeTable[ctx.expr(1)].name] == None:
                 raise Exception("Type error")
@@ -112,7 +114,6 @@ class Typecheck(CoolListener):
     def exitIsvoid(self, ctx: CoolParser.IsvoidContext):
         if structure._allClasses[self.typeTable[ctx.expr()].name] != None:
                 self.typeTable[ctx] = "Bool"
-        
         else:
             raise Exception("Type error")
     
@@ -128,6 +129,15 @@ class Typecheck(CoolListener):
                 raise Exception("Type error")
             
         self.typeTable[ctx] = ctx.ID()
+    
+    def exitLet(self, ctx: CoolParser.LetContext):
+        print("Hola Let")
+    
+    def exitCase(self, ctx: CoolParser.CaseContext):
+        print("Hola Case")
+    
+    def exitNew(self, ctx: CoolParser.NewContext):
+        print("Hola new")
         
         
     

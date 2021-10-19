@@ -9,7 +9,7 @@ from myexceptions import *
 
 
 def parseCase(caseName):
-    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("input/semantic/%s.cool" % caseName))))
+    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("test.cool" % caseName))))
     return parser.program()
 
 class CoolTests(unittest.TestCase):

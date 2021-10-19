@@ -4,11 +4,12 @@ import unittest
 from antlr4 import *
 from antlr.CoolLexer import CoolLexer
 from antlr.CoolParser import CoolParser
+from antlr.CoolListener import CoolListener
 from myexceptions import *
 
 
 def parseCase(caseName):
-    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("input/semantic/%s.cool" % caseName))))
+    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("test.cool"))))
     return parser.program()
 
 class CoolTests(unittest.TestCase):
@@ -18,7 +19,8 @@ class CoolTests(unittest.TestCase):
     def test1(self): 
         tree = parseCase("nomain")
         with self.assertRaises(NoMainException):
-            self.walker.walk(Listener(), tree)
+            print(self.walker.walk(CoolListener, tree))
+            
 
     def test2(self):
         tree = parseCase("badredefineint")
