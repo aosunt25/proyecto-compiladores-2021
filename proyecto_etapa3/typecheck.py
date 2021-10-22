@@ -1,11 +1,12 @@
 from antlr.CoolListener import CoolListener
 from antlr.CoolParser import CoolParser
-
+from myexceptions import *
 import structure
 
 class Typecheck(CoolListener):
     typeTable = {}
     varTable = {}
+    
 
     def __init__(self):
         structure.setBaseClasses()
@@ -32,7 +33,7 @@ class Typecheck(CoolListener):
         if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
             self.typeTable[ctx] = "Int"
         else:
-            raise Exception("Type error")
+            raise TypeCheckMismatch
 
     def exitMult(self, ctx: CoolParser.MultContext):
         if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
@@ -56,23 +57,23 @@ class Typecheck(CoolListener):
         if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
             self.typeTable[ctx] = "Bool"
         else:
-            raise Exception("Type error")
+            raise TypeCheckMismatch
     
     def exitLe(self, ctx: CoolParser.LeContext):
         if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] == "Int":
             self.typeTable[ctx] = "Bool"
         else:
-            raise Exception("Type error")
+            raise TypeCheckMismatch
     
     def exitEq(self, ctx: CoolParser.EqContext):
         if self.typeTable[ctx.expr(0)] == "Int" and self.typeTable[ctx.expr(1)] != "Int":
-            raise Exception("Type error")
+            raise TypeCheckMismatch
 
         elif self.typeTable[ctx.expr(0)] == "String" and self.typeTable[ctx.expr(1)] != "String":
-            raise Exception("Type error")
+            raise TypeCheckMismatch
         
         elif self.typeTable[ctx.expr(0)] == "Bool" and self.typeTable[ctx.expr(1)] != "Bool":
-            raise Exception("Type error")
+            raise TypeCheckMismatch
 
         else:
             self.typeTable[ctx] = "Bool"
@@ -98,9 +99,9 @@ class Typecheck(CoolListener):
 
         if self.typeTable[ctx.expr(0)] == "Bool":
             if structure._allClasses[self.typeTable[ctx.expr(1)].name] == None:
-                raise Exception("Type error")
+                raise MethodNotFound
         else:
-            raise Exception("Type error")
+            raise TypeCheckMismatch
 
     def exitBlock(self, ctx: CoolParser.BlockContext):
         last = 0
@@ -137,7 +138,9 @@ class Typecheck(CoolListener):
         print("Hola Case")
     
     def exitNew(self, ctx: CoolParser.NewContext):
-        print("Hola new")
+         if ctx.TYPE().getText() not in self.typeTable:
+                raise TypeNotFound
+
         
         
     

@@ -4,12 +4,14 @@ import unittest
 from antlr4 import *
 from antlr.CoolLexer import CoolLexer
 from antlr.CoolParser import CoolParser
-from structure import Listener, Jerarquia, JerarquiaPre, types
+#from structure import Jerarquia, JerarquiaPre, types
 from tree import TreePrinter
 from myexceptions import *
 
+from etapa1Listener import Listener
+
 def parseAndCompare(caseName):
-    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("input/semantic/%s.cool" % caseName))))
+    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("resources/semantic/input/%s.cool" % caseName))))
     tree = parser.program()
     walker = ParseTreeWalker()
 

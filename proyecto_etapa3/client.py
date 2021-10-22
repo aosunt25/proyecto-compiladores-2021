@@ -3,6 +3,7 @@ from antlr.CoolParser import *
 from antlr4 import *
 
 from typecheck import Typecheck
+from klassListener import KlassListener
 
 def main(file):
     parser = CoolParser(CommonTokenStream(CoolLexer(FileStream(file))))
@@ -13,4 +14,4 @@ def main(file):
     walker.walk(typecheck, tree)
 
 if __name__ == '__main__':
-    main("test.cool")
+    main("./resources/semantic/input/assignnoconform.cool")
