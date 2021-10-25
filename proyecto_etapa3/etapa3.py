@@ -9,27 +9,30 @@ from tree import TreePrinter
 from myexceptions import *
 
 from etapa1Listener import Listener
+from klassListener import KlassListener
+from typecheck import Typecheck
+from methodListener import  MethodListener
 
 def parseAndCompare(caseName):
     parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("resources/semantic/input/%s.cool" % caseName))))
     tree = parser.program()
     walker = ParseTreeWalker()
 
-    walker.walk(JerarquiaPre(), tree)
-    walker.walk(Jerarquia(), tree)
+    walker.walk(KlassListener(), tree)
+    walker.walk(Typecheck(), tree)
     walker.walk(Listener(), tree)
 
-    treePrinter = TreePrinter(types)
-    walker.walk(treePrinter, tree)
-    output = treePrinter.getOutput()
+    # treePrinter = TreePrinter(types)
+    # walker.walk(treePrinter, tree)
+    # output = treePrinter.getOutput()
 
-    expected = output.split('\n')
-    with open('expected/semantic/%s.txt' % caseName) as f:
-        for line1, line2 in zip(f, expected):
-            if line1[:-1] != line2:
-                print ("Diferencia!!! [%s]-[%s]" % (line1, line2))
-                return False
-    return True
+    # expected = output.split('\n')
+    # with open('expected/semantic/%s.txt' % caseName) as f:
+    #     for line1, line2 in zip(f, expected):
+    #         if line1[:-1] != line2:
+    #             print ("Diferencia!!! [%s]-[%s]" % (line1, line2))
+    #             return False
+    # return True
 
 class BaseTest(unittest.TestCase):
     def setUp(self): 
