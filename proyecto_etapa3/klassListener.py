@@ -25,7 +25,7 @@ class KlassListener(CoolListener):
             raise TypeNotFound
         
         elif ctx.TYPE(1) != None and (ctx.TYPE(1).getText() in self.class_array):
-    
+
             for i in ctx.feature():
                 if  i.ID().getText() in self.dic_methods.get(ctx.TYPE(1).getText()):
                  raise NotSupported

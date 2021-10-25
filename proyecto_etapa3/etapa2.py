@@ -11,7 +11,7 @@ from myexceptions import *
 import typecheck
 import klassListener
 import methodListener
-
+import attributeListener
 
 class Listener(CoolListener):
     c = []
@@ -34,7 +34,7 @@ class CoolTests(unittest.TestCase):
         '''
         tree = parseCase("assignnoconform")
         with self.assertRaises(DoesNotConform):
-            self.walker.walk(methodListener.MethodListener(), tree)
+            self.walker.walk(attributeListener.AttributeListener(), tree)
 
     def test2(self): 
         """
@@ -59,7 +59,7 @@ class CoolTests(unittest.TestCase):
         """
         tree = parseCase("badargs1")
         with self.assertRaises(DoesNotConform):
-            self.walker.walk(Listener(), tree)
+            self.walker.walk(methodListener.MethodListener(), tree)
 
     def test5(self): 
         """

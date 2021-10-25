@@ -13,6 +13,7 @@ class MethodListener(CoolListener):
         self.class_array = []
         self.dic_methods = {}
         self.dic_formals = {}
+        
 
     def enterKlass(self, ctx: CoolParser.KlassContext):
 
@@ -50,12 +51,12 @@ class MethodListener(CoolListener):
         for i in ctx.formal():
             if i.ID().getText() not in formal_array:
                 formal_array.append(i.ID().getText())
+            elif i.ID().getText() == "self":
+                raise DoesNotConform
             else:
                 raise KeyError
                 
         self.dic_formals[ctx.ID().getText] =  formal_array
     
-    def exitNew(self, ctx: CoolParser.NewContext):
-         if ctx.TYPE().getText() not in self.typeTable:
-                raise DoesNotConform
+
         

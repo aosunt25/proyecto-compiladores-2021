@@ -137,8 +137,13 @@ class Typecheck(CoolListener):
     def exitCase(self, ctx: CoolParser.CaseContext):
         print("Hola Case")
     
+    def exitAssign(self, ctx: CoolParser.AssignContext):
+        if self.varTable[ctx.ID().getText()] != structure._allClasses[self.typeTable[ctx.expr()].name]:
+            raise DoesNotConform
+
     def exitNew(self, ctx: CoolParser.NewContext):
-         if ctx.TYPE().getText() not in self.typeTable:
+        
+        if ctx.TYPE().getText() not in self.typeTable:
                 raise TypeNotFound
 
         
