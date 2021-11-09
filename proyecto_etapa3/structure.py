@@ -123,7 +123,6 @@ class SymbolTable(MutableMapping):
     def __repr__(self):
         return self.dict.__repr__()
 
-
 class SymbolTableWithScopes(MutableMapping):
     """
     Esta versión de tabla de símbolos maneja scopes mediante una pila,
