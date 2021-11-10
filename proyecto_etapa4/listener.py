@@ -17,7 +17,7 @@ class Listener1(CoolListener):
         self.typeTable[ctx] = structure._allClasses["Int"]
     
     def exitString(self, ctx: CoolParser.StringContext):
-        self.array_string.append(str(ctx.STRING()))
+        self.array_string.append(str(ctx.STRING()).replace('"',""))
         self.typeTable[ctx] = structure._allClasses["String"]
     
     def exitBool(self, ctx:CoolParser.BoolContext):

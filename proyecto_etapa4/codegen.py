@@ -7,6 +7,8 @@ import sys
 from string import Template
 import asm
 
+import math
+
 from listener import Listener1
 
 class Output:
@@ -62,17 +64,20 @@ def constants(o):
             - tamanio del objeto: [tag, tamanio, ptr al dispTab y contenido] = 4 words
             - valor
     """
-
-    #Literales String 
-
-    for i in range(0, len(Listener1().array_string)):
-        size = 4 + ((len(Listener1().array_string[i])+1)%4)
-        o.accum += asm.cTplStr.substitute(idx=i, tag=5, size=size, sizeIdx=5, value=Listener1().array_string[i].replace('"',""))
-    
     #Literales Int 
 
     for i in range(0, len(Listener1().array_int)):
         o.accum += asm.cTplInt.substitute(idx=i, tag=3, value=Listener1().array_int[i])
+
+        
+    #Literales String 
+
+    for i in range(0, len(Listener1().array_string)):
+        print(int((len(Listener1().array_string[i])+1)/4))
+        size = 4 + int(math.ceil((len(Listener1().array_string[i])+1)/4))
+        o.accum += asm.cTplStr.substitute(idx=i, tag=5, size=size, sizeIdx=i+len(Listener1().array_int), value=Listener1().array_string[i].replace('"',""))
+        o.accum += asm.cTplInt.substitute(idx=i+len(Listener1().array_int), tag=3, value=len(Listener1().array_string[i]))  
+    
 
     # Siempre incluir los bool
     o.accum += asm.boolStr
